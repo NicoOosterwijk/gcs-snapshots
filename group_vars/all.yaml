@@ -1,0 +1,14 @@
+---
+# vim:ft=ansible:
+
+https_health_check:
+  name: stretto-https-health-check
+  project: nicos-101-project
+  port: 8443
+  request_path: /
+  check_interval: 5
+  timeout: 5
+  unhealthy_threshold: 2
+  healthy_threshold: 2
+
+

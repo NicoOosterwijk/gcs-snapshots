@@ -1,0 +1,8 @@
+---
+
+- name: Create https-health-check on Google Cloud Platform
+  gather_facts: False
+  hosts: myMBP
+  roles:
+    - { role: common, tags: 'create' }
+

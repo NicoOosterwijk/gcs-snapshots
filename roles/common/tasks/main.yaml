@@ -1,0 +1,39 @@
+---
+# vim:ft=ansible:
+- name: Check if Google Cloud SDK is installed
+  command: gcloud version
+  register: gcloud_installed
+  changed_when: false
+  ignore_errors: yes
+  tags: check
+
+- fail:
+    msg: "Please make sure Google Cloud SDK is installed before executing the role."
+  when: gcloud_installed | failed
+  tags: check
+
+- name: Check if health_check are already created
+  command: "gcloud compute https-health-checks list --filter='name:{{ https_health_check.name }}' --format='value(NAME)'"
+  register: health_check_created
+  changed_when: false
+  ignore_errors: yes
+  tags: check
+
+- name: Debug health_check 
+  debug:
+    var: health_check_created.stdout
+  tags: check
+
+- name: Create https_health_check on google cloud platform
+  command: >
+    gcloud compute https-health-checks create {{ https_health_check.name }}
+    --project="{{ https_health_check.project }}"
+    --port="{{ https_health_check.port }}"
+    --request-path="{{ https_health_check.request_path }}"
+    --check-interval="{{ https_health_check.check_interval }}"
+    --timeout="{{ https_health_check.timeout }}"
+    --unhealthy-threshold="{{ https_health_check.unhealthy_threshold }}"
+    --healthy-threshold="{{ https_health_check.healthy_threshold }}"
+
+  changed_when: false
+  when: health_check_created.stdout == ""
