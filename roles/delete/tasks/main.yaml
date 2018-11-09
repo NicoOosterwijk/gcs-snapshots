@@ -1,0 +1,83 @@
+---
+# vim:ft=ansible:
+- name: Check if Google Cloud SDK is installed
+  command: gcloud version
+  register: gcloud_installed
+  changed_when: false
+  ignore_errors: yes
+  tags: check
+
+- fail:
+    msg: "Please make sure Google Cloud SDK is installed before executing the role."
+  when: gcloud_installed is failed
+  tags: check
+
+- name: Check if snapshot01 exists
+  command: "gcloud compute snapshots list --filter='name:{{ snapshot01.snapshot_names }}' --format='value(NAME)'"
+  register: snapshot01_exists
+  changed_when: false
+  ignore_errors: yes
+  tags: check,snapshot01
+
+- debug:
+    var: snapshot01_exists.stdout
+  tags: check,snapshot01
+
+- name: Delete snapshot01 on google cloud platform
+  command: >
+    gcloud compute snapshots delete {{ snapshot01.snapshot_names }}
+    --project="{{ snapshot01.project }}"
+  when: snapshot01_exists.stdout != ""
+  tags: snapshot01
+
+- name: Check if snapshot02 exists
+  command: "gcloud compute snapshots list --filter='name:{{ snapshot02.snapshot_names }}' --format='value(NAME)'"
+  register: snapshot02_exists
+  changed_when: false
+  ignore_errors: yes
+  tags: check,snapshot02
+
+- debug:
+    var: snapshot02_exists.stdout
+  tags: check,snapshot02
+
+- name: Delete snapshot02 on google cloud platform
+  command: >
+    gcloud compute snapshots delete {{ snapshot02.snapshot_names }}
+    --project="{{ snapshot02.project }}"
+  tags: snapshot02
+
+- name: Check if snapshot03 exists
+  command: "gcloud compute snapshots list --filter='name:{{ snapshot03.snapshot_names }}' --format='value(NAME)'"
+  register: snapshot03_exists
+  changed_when: false
+  ignore_errors: yes
+  tags: check,snapshot03
+
+- debug:
+    var: snapshot03_exists.stdout
+  tags: check,snapshot03
+
+- name: Delete snapshot03 on google cloud platform
+  command: >
+    gcloud compute snapshots delete {{ snapshot03.snapshot_names }}
+    --project="{{ snapshot03.project }}"
+  tags: snapshot03
+
+- name: Check if snapshot04 exists
+  command: "gcloud compute snapshots list --filter='name:{{ snapshot04.snapshot_names }}' --format='value(NAME)'"
+  register: snapshot04_exists
+  changed_when: false
+  ignore_errors: yes
+  tags: check,snapshot04
+
+- debug:
+    var: snapshot04_exists.stdout
+  tags: check,snapshot04
+
+- name: Delete snapshot04 on google cloud platform
+  command: >
+    gcloud compute snapshots delete {{ snapshot04.snapshot_names }}
+    --project="{{ snapshot04.project }}"
+  tags: snapshot04
+

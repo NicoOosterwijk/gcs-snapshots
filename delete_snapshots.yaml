@@ -1,0 +1,8 @@
+---
+
+- name: Delete snapshots on Google Cloud Platform
+  gather_facts: False
+  hosts: myMBP
+  roles:
+    - { role: delete, tags: 'delete' }
+
