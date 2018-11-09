@@ -1,6 +1,6 @@
 ---
 
-- name: Create https-health-check on Google Cloud Platform
+- name: Create snapshots on Google Cloud Platform
   gather_facts: False
   hosts: myMBP
   roles:

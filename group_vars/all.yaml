@@ -1,14 +1,28 @@
 ---
 # vim:ft=ansible:
 
-https_health_check:
-  name: stretto-https-health-check
+snapshot01:
+  name: tst-stretto-001
   project: nicos-101-project
-  port: 8443
-  request_path: /
-  check_interval: 5
-  timeout: 5
-  unhealthy_threshold: 2
-  healthy_threshold: 2
+  zone: europe-west4-a
+  snapshot_names: snapshot-tst-stretto01
+
+snapshot02:
+  name: tst-stretto-002
+  project: nicos-101-project
+  zone: europe-west4-a
+  snapshot_names: snapshot-tst-stretto02
+
+snapshot03:
+  name: tst-stretto-003
+  project: nicos-101-project
+  zone: europe-west4-a
+  snapshot_names: snapshot-tst-stretto03
+
+snapshot04:
+  name: tst-stretto-004
+  project: nicos-101-project
+  zone: europe-west4-a
+  snapshot_names: snapshot-tst-stretto04
 
 

@@ -9,31 +9,81 @@
 
 - fail:
     msg: "Please make sure Google Cloud SDK is installed before executing the role."
-  when: gcloud_installed | failed
+  when: gcloud_installed is failed
   tags: check
 
-- name: Check if health_check are already created
-  command: "gcloud compute https-health-checks list --filter='name:{{ https_health_check.name }}' --format='value(NAME)'"
-  register: health_check_created
+- name: Check if snapshot01 exists
+  command: "gcloud compute snapshots list --filter='name:{{ snapshot01.snapshot_names }}' --format='value(NAME)'"
+  register: snapshot01_exists
   changed_when: false
   ignore_errors: yes
-  tags: check
+  tags: check,snapshot01
 
-- name: Debug health_check 
-  debug:
-    var: health_check_created.stdout
-  tags: check
+- debug:
+    var: snapshot01_exists.stdout
+  tags: check,snapshot01
 
-- name: Create https_health_check on google cloud platform
+- name: Create snapshot01 on google cloud platform
   command: >
-    gcloud compute https-health-checks create {{ https_health_check.name }}
-    --project="{{ https_health_check.project }}"
-    --port="{{ https_health_check.port }}"
-    --request-path="{{ https_health_check.request_path }}"
-    --check-interval="{{ https_health_check.check_interval }}"
-    --timeout="{{ https_health_check.timeout }}"
-    --unhealthy-threshold="{{ https_health_check.unhealthy_threshold }}"
-    --healthy-threshold="{{ https_health_check.healthy_threshold }}"
+    gcloud compute disks snapshot {{ snapshot01.name }}
+    --project="{{ snapshot01.project }}"
+    --zone="{{ snapshot01.zone }}"
+    --snapshot-names="{{ snapshot01.snapshot_names }}"
+  when: snapshot01_exists.stdout == ""
+  tags: snapshot01
 
+- name: Check if snapshot02 exists
+  command: "gcloud compute snapshots list --filter='name:{{ snapshot02.snapshot_names }}' --format='value(NAME)'"
+  register: snapshot02_exists
   changed_when: false
-  when: health_check_created.stdout == ""
+  ignore_errors: yes
+  tags: check,snapshot02
+
+- debug:
+    var: snapshot02_exists.stdout
+  tags: check,snapshot02
+
+- name: Create snapshot02 on google cloud platform
+  command: >
+    gcloud compute disks snapshot {{ snapshot02.name }}
+    --project="{{ snapshot02.project }}"
+    --zone="{{ snapshot02.zone }}"
+    --snapshot-names="{{ snapshot02.snapshot_names }}"
+
+- name: Check if snapshot03 exists
+  command: "gcloud compute snapshots list --filter='name:{{ snapshot03.snapshot_names }}' --format='value(NAME)'"
+  register: snapshot03_exists
+  changed_when: false
+  ignore_errors: yes
+  tags: check,snapshot03
+
+- debug:
+    var: snapshot03_exists.stdout
+  tags: check,snapshot03
+
+- name: Create snapshot03 on google cloud platform
+  command: >
+    gcloud compute disks snapshot {{ snapshot03.name }}
+    --project="{{ snapshot03.project }}"
+    --zone="{{ snapshot03.zone }}"
+    --snapshot-names="{{ snapshot03.snapshot_names }}"
+
+- name: Check if snapshot04 exists
+  command: "gcloud compute snapshots list --filter='name:{{ snapshot04.snapshot_names }}' --format='value(NAME)'"
+  register: snapshot04_exists
+  changed_when: false
+  ignore_errors: yes
+  tags: check,snapshot04
+
+- debug:
+    var: snapshot04_exists.stdout
+  tags: check,snapshot04
+
+- name: Create snapshot04 on google cloud platform
+  command: >
+    gcloud compute disks snapshot {{ snapshot04.name }}
+    --project="{{ snapshot04.project }}"
+    --zone="{{ snapshot04.zone }}"
+    --snapshot-names="{{ snapshot04.snapshot_names }}"
+
+
