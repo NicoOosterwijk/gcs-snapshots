@@ -2,27 +2,25 @@
 # vim:ft=ansible:
 
 snapshot01:
-  name: tst-stretto-001
-  project: nicos-101-project
+  name: tst-nico-001
+  project: nico-1234
   zone: europe-west4-a
-  snapshot_names: snapshot-tst-stretto01
+  snapshot_names: snapshot-tst-nico01
 
 snapshot02:
-  name: tst-stretto-002
-  project: nicos-101-project
+  name: tst-nico-002
+  project: nico-1234
   zone: europe-west4-a
-  snapshot_names: snapshot-tst-stretto02
+  snapshot_names: snapshot-tst-nico02
 
 snapshot03:
-  name: tst-stretto-003
-  project: nicos-101-project
+  name: tst-nico-003
+  project: nico-1234
   zone: europe-west4-a
-  snapshot_names: snapshot-tst-stretto03
+  snapshot_names: snapshot-tst-nico03
 
 snapshot04:
-  name: tst-stretto-004
-  project: nicos-101-project
+  name: tst-nico-004
+  project: nico-1234
   zone: europe-west4-a
-  snapshot_names: snapshot-tst-stretto04
-
-
+  snapshot_names: snapshot-tst-nico04
